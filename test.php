@@ -155,9 +155,9 @@ foreach ($devices as $dev) {
   print("L2 threshold: ".$l2_thresh."<br/>");
   print("<br/>");
   $fps = $redis->lRange("d".$dev.":fps", 0, -1);
+  $fps_csv = implode(",", $fps);
   $fps_avg = array_sum($fps)/count($fps);
   print("<b>FPS per XB: ( Average ".round($fps_avg,2)." )</b><br/>");
-  $fps_csv = implode(",", array_reverse($fps));
 ?>
 <script>
 lineChart([<?=$fps_csv?>]);
@@ -167,7 +167,7 @@ lineChart([<?=$fps_csv?>]);
   $n_evt = $redis->lRange("d".$dev.":n_evt", 0, -1);
   $nevt_avg = array_sum($n_evt)/count($n_evt);
   print("<b>evts per XB: ( Average ".round($nevt_avg,2)." )</b><br/>");
-  $n_evt_csv = implode(",", array_reverse($n_evt));
+  $n_evt_csv = implode(",", $n_evt);
 ?>
 <script>
 lineChart([<?=$n_evt_csv?>]);
@@ -177,7 +177,7 @@ lineChart([<?=$n_evt_csv?>]);
   $n_pix = $redis->lRange("d".$dev.":n_pix", 0, -1);
   $npix_avg = array_sum($n_pix)/count($n_pix);
   print("<b>pix per XB: ( Average ".round($npix_avg,2)." )</b><br/>");
-  $n_pix_csv = implode(",", array_reverse($n_pix));
+  $n_pix_csv = implode(",", $n_pix);
 ?>
 <script>
 lineChart([<?=$n_pix_csv?>]);
@@ -190,8 +190,7 @@ lineChart([<?=$n_pix_csv?>]);
 ?>
 <script>
 //plotHisto([<?=$histo?>]);
-//lineChart([<?=$histo?>].slice(0,50), 1);
-lineChart([<?=$histo?>].slice(0,100), 1);
+lineChart([<?=$histo?>].slice(0,50), 1);
 </script>
 <?php
 
